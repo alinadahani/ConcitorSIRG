@@ -211,6 +211,21 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
 .flinks a:hover { color: #fff; }
 .fmeta { font-size: 13px; color: rgba(255,255,255,0.35); }
 
+/* SESSION REQUEST FORM */
+.cal-fallback form { width: 100%; }
+.field textarea { width: 100%; font-family: var(--sans); font-size: 15px; color: var(--ink); background: #fff;
+  border: 1.5px solid var(--line-strong); border-radius: 9px; padding: 11px 13px; resize: vertical; }
+.field textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(194,97,30,0.15); }
+.cal-fallback .field input { background: #fff; }
+.cal-fallback button.btn { cursor: pointer; font-family: var(--sans); }
+.cal-fallback button.btn:disabled { opacity: .6; cursor: default; }
+.s-done { display: none; }
+.s-done .tick { width: 48px; height: 48px; border-radius: 12px; background: var(--orange-soft); color: var(--orange); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.s-done .tick svg { width: 24px; height: 24px; }
+.cal-fallback.sent form { display: none; }
+.cal-fallback.sent .s-done { display: block; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
 /* MODES: live (pre-event registration) vs recording */
 body.mode-live .m-rec, body:not(.mode-live) .m-live { display: none !important; }
 .when { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 600; color: #fff;
@@ -266,7 +281,7 @@ a.btn-submit { display: block; text-align: center; }
   <script> block at the bottom of this file):
     videoEmbedUrl  – Vimeo/YouTube embed URL for the recording
     bookingUrl     – Calendly / HubSpot / Microsoft Bookings embed URL
-    formEndpoint   – Where form submissions are POSTed (e.g. Formspree, HubSpot)
+    formEndpoint   – Form handler (submit.php on Hostinger; emails + saves to data/*.csv)
     privacyUrl     – Link to the privacy policy
   Partner logos: drop official files into /webinar-beat-the-auction/
   as concitor.png, intapp.png, monarch.png (text fallbacks show until then).
@@ -397,6 +412,7 @@ a.btn-submit { display: block; text-align: center; }
             <input type="checkbox" name="consent" id="f-consent" value="yes">
             <span>I agree to receive follow-up communications. See our <a id="privacy-link" href="mailto:info@concitor.com?subject=Privacy%20policy" target="_blank" rel="noopener">privacy policy</a>.</span>
           </label>
+          <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
           <button class="btn-submit" type="submit" id="submit-btn">Watch now</button>
           <p class="form-err" id="form-err" role="alert"></p>
         </form>
@@ -429,7 +445,22 @@ a.btn-submit { display: block; text-align: center; }
           <p class="eyebrow">30-minute strategy session</p>
           <h3>Pick a time that works for you</h3>
           <p>Tell us a couple of times that suit you and we'll confirm your session with a tailored demo of Intapp DealCloud with Celeste.</p>
-          <a class="btn" href="mailto:info@concitor.com?subject=Beat%20the%20Auction%20%E2%80%94%2030-minute%20strategy%20session">Request a session <span>→</span></a>
+          <form id="session-form" novalidate>
+            <div class="row2">
+              <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" required></div>
+              <div class="field"><label for="s-firm">Firm</label><input id="s-firm" name="firm" type="text" autocomplete="organization" required></div>
+            </div>
+            <div class="field"><label for="s-email">Work email</label><input id="s-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="s-times">Preferred days &amp; times (with time zone)</label><textarea id="s-times" name="times" rows="3" required placeholder="e.g. Tue or Wed afternoon, CT"></textarea></div>
+            <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <button class="btn" type="submit" id="s-btn">Request a session <span>→</span></button>
+            <p class="form-err" id="s-err" role="alert"></p>
+          </form>
+          <div class="s-done" id="s-done" aria-live="polite">
+            <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3>Request received</h3>
+            <p>Thank you. We'll be in touch shortly to confirm a time.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -440,13 +471,13 @@ a.btn-submit { display: block; text-align: center; }
     <div class="wrap">
       <span class="label">Presented by</span>
       <div class="logos">
-        <div class="logo" data-logo="concitor.png" data-alt="Concitor Transformation Consulting Group">
+        <div class="logo" data-logo="/webinar-beat-the-auction/concitor.png" data-alt="Concitor Transformation Consulting Group">
           <span><span class="wm">Concitor</span><span class="wm-sub">Transformation Consulting Group</span></span>
         </div>
-        <div class="logo" data-logo="intapp.png" data-alt="Intapp">
+        <div class="logo" data-logo="/webinar-beat-the-auction/intapp.png" data-alt="Intapp">
           <span class="wm">Intapp</span>
         </div>
-        <div class="logo" data-logo="monarch.png" data-alt="Monarch">
+        <div class="logo" data-logo="/webinar-beat-the-auction/monarch.png" data-alt="Monarch">
           <span class="wm">Monarch</span>
         </div>
       </div>
@@ -470,7 +501,7 @@ a.btn-submit { display: block; text-align: center; }
 const SETTINGS = {
   videoEmbedUrl: "",   // e.g. "https://player.vimeo.com/video/123456789?autoplay=1"
   bookingUrl:    "",   // e.g. "https://calendly.com/concitor/30min?embed_type=Inline"
-  formEndpoint:  "",   // e.g. "https://formspree.io/f/xxxxxxx" (receives JSON POST)
+  formEndpoint:  "/webinar-beat-the-auction/submit.php",  // Hostinger PHP handler
   privacyUrl:    "",   // e.g. "https://www.concitor.com/privacy"
   registrationUrl: "https://us06web.zoom.us/webinar/register/WN_gtfxDYyHTJ6QnCg6IK7x3g#/registration",
   liveUntil:     "2026-11-17T18:30:00Z"  // Tue Nov 17, 12:30 p.m. CT (session starts 11:30 a.m. CT)
@@ -553,7 +584,7 @@ form.addEventListener('submit', async (e) => {
   if (missing.length) { err.textContent = 'Please complete all fields.'; err.style.display = 'block'; return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { err.textContent = 'Please enter a valid work email.'; err.style.display = 'block'; return; }
   data.consent = data.consent === 'yes';
-  data.source = 'webinar-beat-the-auction';
+  data.type = 'recording';
 
   btn.disabled = true; btn.textContent = 'One moment…';
   try {
@@ -571,6 +602,32 @@ form.addEventListener('submit', async (e) => {
     err.textContent = 'Something went wrong. Please try again, or email info@concitor.com.';
     err.style.display = 'block';
     btn.disabled = false; btn.textContent = 'Watch now';
+  }
+});
+
+// Strategy-session request form (used when no booking calendar is embedded)
+const sForm = document.getElementById('session-form');
+if (sForm) sForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const sErr = document.getElementById('s-err'), sBtn = document.getElementById('s-btn');
+  sErr.style.display = 'none';
+  const data = Object.fromEntries(new FormData(sForm).entries());
+  if (['name','firm','email','times'].some(k => !(data[k] || '').trim())) { sErr.textContent = 'Please complete all fields.'; sErr.style.display = 'block'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { sErr.textContent = 'Please enter a valid work email.'; sErr.style.display = 'block'; return; }
+  data.type = 'session';
+  sBtn.disabled = true;
+  try {
+    const r = await fetch(SETTINGS.formEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!r.ok) throw new Error('submit failed');
+    document.getElementById('cal-fallback').classList.add('sent');
+  } catch (ex) {
+    sErr.textContent = 'Something went wrong. Please try again, or email info@concitor.com.';
+    sErr.style.display = 'block';
+    sBtn.disabled = false;
   }
 });
 </script>
