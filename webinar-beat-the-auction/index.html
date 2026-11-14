@@ -410,7 +410,7 @@ a.btn-submit { display: block; text-align: center; }
           </div>
           <label class="consent">
             <input type="checkbox" name="consent" id="f-consent" value="yes">
-            <span>I agree to receive follow-up communications. See our <a id="privacy-link" href="mailto:info@concitor.com?subject=Privacy%20policy" target="_blank" rel="noopener">privacy policy</a>.</span>
+            <span>I agree to receive follow-up communications. See our <a id="privacy-link" href="mailto:ckwon@concitor.com?subject=Privacy%20policy" target="_blank" rel="noopener">privacy policy</a>.</span>
           </label>
           <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
           <button class="btn-submit" type="submit" id="submit-btn">Watch now</button>
@@ -488,9 +488,9 @@ a.btn-submit { display: block; text-align: center; }
 <footer>
   <div class="wrap">
     <div class="flinks">
-      <a id="privacy-foot" href="mailto:info@concitor.com?subject=Privacy%20policy">Privacy policy</a>
+      <a id="privacy-foot" href="mailto:ckwon@concitor.com?subject=Privacy%20policy">Privacy policy</a>
       <span>·</span>
-      <a href="mailto:info@concitor.com">Contact</a>
+      <a href="mailto:ckwon@concitor.com">Contact</a>
     </div>
     <div class="fmeta">&copy; 2026 Concitor&trade; LLC</div>
   </div>
@@ -599,7 +599,7 @@ form.addEventListener('submit', async (e) => {
     try { localStorage.setItem(STORE_KEY, '1'); } catch (e) {}
     unlock(true);
   } catch (ex) {
-    err.textContent = 'Something went wrong. Please try again, or email info@concitor.com.';
+    err.textContent = 'Something went wrong. Please try again, or email ckwon@concitor.com.';
     err.style.display = 'block';
     btn.disabled = false; btn.textContent = 'Watch now';
   }
@@ -625,7 +625,7 @@ if (sForm) sForm.addEventListener('submit', async (e) => {
     if (!r.ok) throw new Error('submit failed');
     document.getElementById('cal-fallback').classList.add('sent');
   } catch (ex) {
-    sErr.textContent = 'Something went wrong. Please try again, or email info@concitor.com.';
+    sErr.textContent = 'Something went wrong. Please try again, or email ckwon@concitor.com.';
     sErr.style.display = 'block';
     sBtn.disabled = false;
   }

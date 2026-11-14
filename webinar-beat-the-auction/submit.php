@@ -9,7 +9,7 @@
  */
 
 // ===== SETTINGS =====
-const NOTIFY_TO   = 'info@concitor.com';        // who receives each submission
+const NOTIFY_TO   = 'ckwon@concitor.com';        // who receives each submission
 const NOTIFY_FROM = 'no-reply@concitor.org';    // must be an address on a domain hosted at Hostinger
 const DATA_DIR    = __DIR__ . '/data';
 // ====================
