@@ -211,6 +211,29 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
 .flinks a:hover { color: #fff; }
 .fmeta { font-size: 13px; color: rgba(255,255,255,0.35); }
 
+/* MODES: live (pre-event registration) vs recording */
+body.mode-live .m-rec, body:not(.mode-live) .m-live { display: none !important; }
+.when { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 600; color: #fff;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 100px; padding: 9px 18px; }
+.when svg { width: 17px; height: 17px; color: var(--orange); }
+a.play { text-decoration: none; }
+.reg-when { background: var(--wash); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 22px; }
+.reg-when .d { font-size: 17px; font-weight: 700; color: var(--ink); }
+.reg-when .t { font-size: 15px; color: var(--ink-soft); margin-top: 2px; }
+.reg-when .f { font-size: 13px; color: var(--ink-faint); margin-top: 8px; }
+a.btn-submit { display: block; text-align: center; }
+.reg-note { margin-top: 14px; font-size: 13px; color: var(--ink-faint); line-height: 1.5; }
+
+/* THREE LEVERS */
+.levers { margin-top: 40px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 28px 28px 26px; }
+.levers .lead-in { font-size: 16.5px; color: var(--ink); font-weight: 600; line-height: 1.5; margin-bottom: 18px; }
+.lever-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+.lever-list li { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 15px; font-weight: 600; color: var(--ink-soft); line-height: 1.35; }
+.lever-list li .n { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--ink-faint); margin-bottom: 6px; }
+.lever-list li.focus { background: var(--orange-soft); border-color: transparent; color: var(--ink); }
+.lever-list li.focus .n { color: var(--orange); }
+.levers p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.6; }
+
 /* RESPONSIVE */
 @media (max-width: 940px) {
   .watch-grid { grid-template-columns: 1fr; }
@@ -228,6 +251,8 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
   .play { width: 68px; height: 68px; }
   .lock { left: 14px; bottom: 12px; font-size: 13px; }
   .cal-fallback { padding: 36px 24px; }
+  .lever-list { grid-template-columns: 1fr; }
+  .levers { padding: 22px 18px; }
   .presented .wrap { gap: 24px; }
   .logos { gap: 28px; }
 }
@@ -270,9 +295,14 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
   <!-- 1. HERO -->
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">On-demand webinar</p>
+      <p class="eyebrow m-rec">On-demand webinar</p>
+      <p class="eyebrow m-live">Live webinar</p>
       <h1>Beat the <span>Auction</span></h1>
       <p class="sub">How Top PE Firms Build Proprietary Deal Flow to Drive Better MOIC and Faster DPI</p>
+      <p class="when m-live">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+        Tuesday, Nov 17 · 11:30 a.m. CT / 12:30 p.m. ET
+      </p>
     </div>
   </section>
 
@@ -281,7 +311,16 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
       <div>
         <!-- Video -->
         <div class="player" id="player">
-          <div class="poster">
+          <div class="poster m-live">
+            <a class="play reg-link" href="#" target="_blank" rel="noopener" aria-label="Register for the live webinar on Zoom">
+              <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg>
+            </a>
+            <div class="lock">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Live on Zoom · Tue, Nov 17 · 12:30 p.m. ET
+            </div>
+          </div>
+          <div class="poster m-rec">
             <button class="play" id="play-btn" type="button" aria-label="Fill out the form to watch the recording">
               <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg>
             </button>
@@ -293,7 +332,18 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
           <div class="msg" id="player-msg">Thanks for registering. The recording link will be shared with you by email shortly.</div>
         </div>
 
-        <p class="supporting">Watch the full 45-minute session, including a live demo of Intapp DealCloud with Celeste.</p>
+        <p class="supporting m-rec">Watch the full 45-minute session, including a live demo of Intapp DealCloud with Celeste.</p>
+        <p class="supporting m-live">Join us live for a 45-minute session, closing with a live demo of Intapp DealCloud with Celeste.</p>
+
+        <div class="levers">
+          <p class="lead-in">Top-performing PE firms lean on three levers to drive better MOIC and faster DPI:</p>
+          <ol class="lever-list">
+            <li class="focus"><span class="n">01 · This session</span>Proprietary deal flow</li>
+            <li><span class="n">02</span>AI-driven value creation</li>
+            <li><span class="n">03</span>Broad-based employee ownership</li>
+          </ol>
+          <p>Buying before an auction starts means better entry pricing, more targeted sourcing than inbound CIMs, and a faster path to add-ons.</p>
+        </div>
 
         <!-- 2. WHAT YOU'LL LEARN -->
         <div class="learn">
@@ -307,7 +357,18 @@ footer .wrap { display: flex; align-items: center; justify-content: space-betwee
       </div>
 
       <!-- 3. GATE FORM -->
-      <aside class="card" id="gate-card">
+      <aside class="card m-live">
+        <h2>Save your seat</h2>
+        <div class="reg-when">
+          <div class="d">Tuesday, November 17</div>
+          <div class="t">11:30 a.m. CT / 12:30 p.m. ET</div>
+          <div class="f">Live on Zoom · 45 minutes</div>
+        </div>
+        <a class="btn-submit reg-link" href="#" target="_blank" rel="noopener">Register now</a>
+        <p class="reg-note">Registration opens on Zoom in a new tab. Can't make it live? Register anyway and come back here for the recording.</p>
+      </aside>
+
+      <aside class="card m-rec" id="gate-card">
         <form id="gate-form" novalidate>
           <h2>Watch the recording</h2>
           <div class="row2">
@@ -410,8 +471,22 @@ const SETTINGS = {
   videoEmbedUrl: "",   // e.g. "https://player.vimeo.com/video/123456789?autoplay=1"
   bookingUrl:    "",   // e.g. "https://calendly.com/concitor/30min?embed_type=Inline"
   formEndpoint:  "",   // e.g. "https://formspree.io/f/xxxxxxx" (receives JSON POST)
-  privacyUrl:    ""    // e.g. "https://www.concitor.com/privacy"
+  privacyUrl:    "",   // e.g. "https://www.concitor.com/privacy"
+  registrationUrl: "https://us06web.zoom.us/webinar/register/WN_gtfxDYyHTJ6QnCg6IK7x3g#/registration",
+  liveUntil:     "2026-11-17T18:30:00Z"  // Tue Nov 17, 12:30 p.m. CT (session starts 11:30 a.m. CT)
 };
+/*
+  Page mode is automatic:
+    - videoEmbedUrl set            -> on-demand recording (gated)
+    - no video, before liveUntil   -> live registration (Zoom)
+    - no video, after liveUntil    -> gate form; recording "will be emailed"
+  Preview any mode with ?mode=live or ?mode=recording
+*/
+const forced = new URLSearchParams(location.search).get('mode');
+const isLive = forced ? forced === 'live'
+  : (!SETTINGS.videoEmbedUrl && Date.now() < Date.parse(SETTINGS.liveUntil));
+if (isLive) document.body.classList.add('mode-live');
+document.querySelectorAll('.reg-link').forEach(a => a.href = SETTINGS.registrationUrl);
 /* ========================================================== */
 
 const STORE_KEY = 'concitor-bta-unlocked';
