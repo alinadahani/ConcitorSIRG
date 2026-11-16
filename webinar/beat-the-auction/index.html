@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beat the Auction — On-Demand Webinar | Concitor</title>
+<meta name="description" content="Beat the Auction: How Top PE Firms Build Proprietary Deal Flow to Drive Better MOIC and Faster DPI. Watch the full 45-minute session, including a live demo of Intapp DealCloud with Celeste.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #C2611E;
+  --orange-deep: #9E4D14;
+  --orange-soft: #F6E7D6;
+  --wash: #FBF2E7;
+  --paper: #FBF8F4;
+  --white: #FFFFFF;
+  --ink: #211A14;
+  --ink-soft: #4C4138;
+  --ink-faint: #766B60;
+  --line: #EBE0D3;
+  --line-strong: #DCCBB6;
+  --sans: 'Hanken Grotesk', system-ui, sans-serif;
+  --serif: 'Newsreader', Georgia, serif;
+  --max: 1120px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+
+.eyebrow {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+
+/* TOP BAR */
+.topbar { background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+.brand-name { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.1; }
+.brand-sub { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+.topbar .back { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.6); transition: color .15s; white-space: nowrap; }
+.topbar .back:hover { color: #fff; }
+
+/* HERO */
+.hero { background: var(--ink); color: #fff; padding: 72px 0 80px; position: relative; overflow: hidden; }
+.hero::after {
+  content: ""; position: absolute; right: -180px; top: -200px; width: 560px; height: 560px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,97,30,0.28) 0%, rgba(194,97,30,0) 65%);
+  pointer-events: none;
+}
+.hero .wrap { position: relative; z-index: 1; }
+.hero h1 {
+  font-size: clamp(42px, 7vw, 76px);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+.hero h1 span { color: var(--orange); }
+.hero .sub { font-size: clamp(18px, 2.2vw, 23px); color: rgba(255,255,255,0.82); max-width: 48ch; line-height: 1.45; }
+
+/* MAIN GRID */
+.watch { padding: 64px 0 88px; }
+.watch-grid { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 48px; align-items: start; }
+
+.player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 65% 35%, #5A3A22 0%, #2A211B 55%, #1C1713 100%);
+  box-shadow: 0 18px 50px rgba(33,26,20,0.18);
+}
+.player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.player .poster { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.play {
+  width: 84px; height: 84px; border-radius: 50%;
+  background: var(--orange);
+  display: flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer;
+  box-shadow: 0 10px 30px rgba(194,97,30,0.45);
+  transition: transform .15s, background .15s;
+}
+.play:hover { transform: scale(1.05); background: var(--orange-deep); }
+.play svg { width: 30px; height: 30px; margin-left: 5px; }
+.lock {
+  position: absolute; left: 22px; bottom: 18px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14.5px; font-weight: 500; color: rgba(255,255,255,0.9);
+}
+.lock svg { width: 15px; height: 15px; }
+.player .msg {
+  position: absolute; inset: 0; display: none; align-items: center; justify-content: center; text-align: center;
+  padding: 32px; color: rgba(255,255,255,0.9); font-size: 16px; line-height: 1.6;
+}
+.player.pending .poster { display: none; }
+.player.pending .msg { display: flex; }
+
+.supporting { margin-top: 22px; font-size: 17px; color: var(--ink-soft); line-height: 1.6; }
+
+.learn { margin-top: 44px; }
+.learn h2 { font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 18px; letter-spacing: -0.01em; }
+.checks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; font-size: 16.5px; color: var(--ink-soft); line-height: 1.55; }
+.checks li svg { width: 18px; height: 18px; margin-top: 3px; color: var(--orange); }
+.checks li strong { color: var(--ink); font-weight: 600; }
+
+/* FORM CARD */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 34px 32px 32px;
+  box-shadow: 0 10px 36px rgba(33,26,20,0.06);
+  position: sticky; top: 24px;
+}
+.card h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 22px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 7px; }
+.field input {
+  width: 100%;
+  font-family: var(--sans); font-size: 15px; color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--line-strong);
+  border-radius: 9px;
+  padding: 11px 13px;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.field input:focus { outline: none; border-color: var(--orange); background: #fff; box-shadow: 0 0 0 3px rgba(194,97,30,0.15); }
+.consent { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; margin: 4px 0 22px; font-size: 13px; color: var(--ink-faint); line-height: 1.5; }
+.consent input { width: 17px; height: 17px; margin-top: 1px; accent-color: var(--orange); }
+.consent a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
+.btn-submit {
+  width: 100%;
+  font-family: var(--sans); font-size: 16px; font-weight: 700;
+  color: #fff; background: var(--orange);
+  border: none; border-radius: 10px; padding: 15px 20px;
+  cursor: pointer; transition: background .15s, transform .1s;
+}
+.btn-submit:hover { background: var(--orange-deep); transform: translateY(-1px); }
+.btn-submit:disabled { opacity: .6; cursor: default; transform: none; }
+.form-err { display: none; margin-top: 12px; font-size: 13.5px; color: #A3361A; }
+.done { display: none; text-align: left; }
+.done .tick { width: 48px; height: 48px; border-radius: 12px; background: var(--orange-soft); color: var(--orange); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.done .tick svg { width: 24px; height: 24px; }
+.done p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 18px; }
+.done a.link { font-weight: 600; color: var(--orange); }
+.card.unlocked form { display: none; }
+.card.unlocked .done { display: block; }
+
+/* BOOKING */
+.book { background: var(--white); border-top: 1px solid var(--line); padding: 88px 0; }
+.book-grid { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 56px; align-items: start; }
+.book h2 { font-size: clamp(32px, 4.2vw, 46px); font-weight: 800; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 20px; }
+.book .copy { font-size: 17.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 26px; max-width: 44ch; }
+.book .expect { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+.calendar {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--paper);
+  min-height: 640px;
+  position: relative;
+}
+.calendar iframe { width: 100%; height: 700px; border: 0; display: block; background: #fff; }
+.cal-fallback { padding: 48px 40px; display: flex; flex-direction: column; justify-content: center; min-height: 640px; }
+.cal-fallback h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+.cal-fallback p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 24px; max-width: 44ch; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  border-radius: 100px; padding: 12px 24px;
+  background: var(--orange); color: #fff; border: 1.5px solid var(--orange);
+  transition: background .15s, transform .1s;
+}
+.btn:hover { background: var(--orange-deep); border-color: var(--orange-deep); transform: translateY(-1px); }
+
+/* PRESENTED BY */
+.presented { background: var(--wash); border-top: 1px solid var(--line); padding: 44px 0; }
+.presented .wrap { display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.presented .label { font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); }
+.logos { display: flex; align-items: center; gap: 44px; flex-wrap: wrap; justify-content: center; }
+.logos img { display: block; width: auto; }
+.logo-concitor { height: 56px; border-radius: 8px; }
+.logo-intapp { height: 32px; }
+.logo-monarch { height: 26px; }
+
+/* FOOTER */
+footer { background: var(--ink); padding: 26px 0; }
+footer .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.flinks { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: rgba(255,255,255,0.45); }
+.flinks a { color: rgba(255,255,255,0.6); transition: color .15s; }
+.flinks a:hover { color: #fff; }
+.fmeta { font-size: 13px; color: rgba(255,255,255,0.35); }
+
+/* SESSION REQUEST FORM */
+.cal-fallback form { width: 100%; }
+.field textarea { width: 100%; font-family: var(--sans); font-size: 15px; color: var(--ink); background: #fff;
+  border: 1.5px solid var(--line-strong); border-radius: 9px; padding: 11px 13px; resize: vertical; }
+.field textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(194,97,30,0.15); }
+.cal-fallback .field input { background: #fff; }
+.cal-fallback button.btn { cursor: pointer; font-family: var(--sans); }
+.cal-fallback button.btn:disabled { opacity: .6; cursor: default; }
+.s-done { display: none; }
+.s-done .tick { width: 48px; height: 48px; border-radius: 12px; background: var(--orange-soft); color: var(--orange); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.s-done .tick svg { width: 24px; height: 24px; }
+.cal-fallback.sent form { display: none; }
+.cal-fallback.sent .s-done { display: block; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* MODES: live (pre-event registration) vs recording */
+body.mode-live .m-rec, body:not(.mode-live) .m-live { display: none !important; }
+.when { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 600; color: #fff;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 100px; padding: 9px 18px; }
+.when svg { width: 17px; height: 17px; color: var(--orange); }
+a.play { text-decoration: none; }
+.reg-when { background: var(--wash); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; margin-bottom: 22px; }
+.reg-when .d { font-size: 17px; font-weight: 700; color: var(--ink); }
+.reg-when .t { font-size: 15px; color: var(--ink-soft); margin-top: 2px; }
+.reg-when .f { font-size: 13px; color: var(--ink-faint); margin-top: 8px; }
+a.btn-submit { display: block; text-align: center; }
+.reg-note { margin-top: 14px; font-size: 13px; color: var(--ink-faint); line-height: 1.5; }
+
+/* THREE LEVERS */
+.levers { margin-top: 40px; background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 28px 28px 26px; }
+.levers .lead-in { font-size: 16.5px; color: var(--ink); font-weight: 600; line-height: 1.5; margin-bottom: 18px; }
+.lever-list { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+.lever-list li { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 15px; font-weight: 600; color: var(--ink-soft); line-height: 1.35; }
+.lever-list li .n { display: block; font-size: 11px; font-weight: 700; letter-spacing: .12em; color: var(--ink-faint); margin-bottom: 6px; }
+.lever-list li.focus { background: var(--orange-soft); border-color: transparent; color: var(--ink); }
+.lever-list li.focus .n { color: var(--orange); }
+.levers p { font-size: 15.5px; color: var(--ink-soft); line-height: 1.6; }
+
+/* RESPONSIVE */
+@media (max-width: 940px) {
+  .watch-grid { grid-template-columns: 1fr; }
+  .card { position: static; max-width: 560px; }
+  .book-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 16px; }
+  .hero { padding: 52px 0 60px; }
+  .watch { padding: 40px 0 64px; }
+  .book { padding: 64px 0; }
+  .card { padding: 28px 22px 24px; }
+  .row2 { grid-template-columns: 1fr; gap: 0; }
+  .topbar .back { display: none; }
+  .play { width: 68px; height: 68px; }
+  .lock { left: 14px; bottom: 12px; font-size: 13px; }
+  .cal-fallback { padding: 36px 24px; }
+  .lever-list { grid-template-columns: 1fr; }
+  .levers { padding: 22px 18px; }
+  .presented .wrap { gap: 24px; }
+  .logos { gap: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!--
+  ============================================================
+  PAGE SETTINGS — fill these in before launch (see SETTINGS in the
+  <script> block at the bottom of this file):
+    videoEmbedUrl  – Vimeo/YouTube embed URL for the recording
+    bookingUrl     – Calendly / HubSpot / Microsoft Bookings embed URL
+    formEndpoint   – Form handler (submit.php on Hostinger; emails + saves to data/*.csv)
+    privacyUrl     – Link to the privacy policy
+  ============================================================
+-->
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Concitor home">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="38" height="38" rx="9" fill="#C2611E"/>
+        <circle cx="19" cy="19" r="12" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
+        <circle cx="19" cy="19" r="6.5" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
+        <circle cx="19" cy="19" r="2.5" fill="#FBF2E7"/>
+      </svg>
+      <div>
+        <div class="brand-name">Concitor</div>
+        <div class="brand-sub">Transformation Consulting Group</div>
+      </div>
+    </a>
+    <a class="back" href="https://www.concitor.com">Explore Concitor TCG →</a>
+  </div>
+</div>
+
+<main>
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow m-rec">On-demand webinar</p>
+      <p class="eyebrow m-live">Live webinar</p>
+      <h1>Beat the <span>Auction</span></h1>
+      <p class="sub">How Top PE Firms Build Proprietary Deal Flow to Drive Better MOIC and Faster DPI</p>
+      <p class="when m-live">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
+        Tuesday, Nov 17 · 11:30 a.m. CT / 12:30 p.m. ET
+      </p>
+    </div>
+  </section>
+
+  <section class="watch">
+    <div class="wrap watch-grid">
+      <div>
+        <!-- Video -->
+        <div class="player" id="player">
+          <div class="poster m-live">
+            <a class="play reg-link" href="#" target="_blank" rel="noopener" aria-label="Register for the live webinar on Zoom">
+              <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg>
+            </a>
+            <div class="lock">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              Live on Zoom · Tue, Nov 17 · 12:30 p.m. ET
+            </div>
+          </div>
+          <div class="poster m-rec">
+            <button class="play" id="play-btn" type="button" aria-label="Fill out the form to watch the recording">
+              <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M6 4l15 8-15 8z"/></svg>
+            </button>
+            <div class="lock" id="lock-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              Fill out the form to watch · 45 minutes
+            </div>
+          </div>
+          <div class="msg" id="player-msg">Thanks for registering. The recording link will be shared with you by email shortly.</div>
+        </div>
+
+        <p class="supporting m-rec">Watch the full 45-minute session, including a live demo of Intapp DealCloud with Celeste.</p>
+        <p class="supporting m-live">Join us live for a 45-minute session, closing with a live demo of Intapp DealCloud with Celeste.</p>
+
+        <div class="levers">
+          <p class="lead-in">Top-performing PE firms lean on three levers to drive better MOIC and faster DPI:</p>
+          <ol class="lever-list">
+            <li class="focus"><span class="n">01 · This session</span>Proprietary deal flow</li>
+            <li><span class="n">02</span>AI-driven value creation</li>
+            <li><span class="n">03</span>Broad-based employee ownership</li>
+          </ol>
+          <p>Buying before an auction starts means better entry pricing, more targeted sourcing than inbound CIMs, and a faster path to add-ons.</p>
+        </div>
+
+        <!-- 2. WHAT YOU'LL LEARN -->
+        <div class="learn">
+          <h2>What you'll learn</h2>
+          <ul class="checks">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>How proprietary deal flow improves both <strong>MOIC</strong> and <strong>DPI</strong></span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>How AI is changing the way firms identify and build relationships with off-market targets</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>What this looks like in practice, with a live look at <strong>Intapp DealCloud with Celeste</strong>, the expert AI built to run efficient, sovereign and integrated Firm AI</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3. GATE FORM -->
+      <aside class="card m-live">
+        <h2>Save your seat</h2>
+        <div class="reg-when">
+          <div class="d">Tuesday, November 17</div>
+          <div class="t">11:30 a.m. CT / 12:30 p.m. ET</div>
+          <div class="f">Live on Zoom · 45 minutes</div>
+        </div>
+        <a class="btn-submit reg-link" href="#" target="_blank" rel="noopener">Register now</a>
+        <p class="reg-note">Registration opens on Zoom in a new tab. Can't make it live? Register anyway and come back here for the recording.</p>
+      </aside>
+
+      <aside class="card m-rec" id="gate-card">
+        <form id="gate-form" novalidate>
+          <h2>Watch the recording</h2>
+          <div class="row2">
+            <div class="field">
+              <label for="f-first">First name</label>
+              <input id="f-first" name="first_name" type="text" autocomplete="given-name" required>
+            </div>
+            <div class="field">
+              <label for="f-last">Last name</label>
+              <input id="f-last" name="last_name" type="text" autocomplete="family-name" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-email">Work email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f-firm">Firm</label>
+            <input id="f-firm" name="firm" type="text" autocomplete="organization" required>
+          </div>
+          <div class="field">
+            <label for="f-title">Title</label>
+            <input id="f-title" name="title" type="text" autocomplete="organization-title" required>
+          </div>
+          <label class="consent">
+            <input type="checkbox" name="consent" id="f-consent" value="yes">
+            <span>I agree to receive follow-up communications. See our <a id="privacy-link" href="mailto:ckwon@concitor.com?subject=Privacy%20policy" target="_blank" rel="noopener">privacy policy</a>.</span>
+          </label>
+          <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn-submit" type="submit" id="submit-btn">Watch now</button>
+          <p class="form-err" id="form-err" role="alert"></p>
+        </form>
+        <div class="done" aria-live="polite">
+          <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h2>You're in.</h2>
+          <p>Enjoy the session. When you're ready to see how this applies to your own pipeline, book a strategy session below.</p>
+          <a class="link" href="#book">Book a 30-minute session ↓</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- AFTER THE FORM: 1. BOOKING CTA -->
+  <section class="book" id="book">
+    <div class="wrap book-grid">
+      <div>
+        <p class="eyebrow">Next step</p>
+        <h2>See it with your own deals</h2>
+        <p class="copy">Book a 30-minute strategy session to talk through your firm's sourcing approach and see a tailored demo of Intapp DealCloud with Celeste.</p>
+        <p class="expect">What to expect</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>A review of how your team tracks relationships today</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>A demo focused on your workflow</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Practical next steps</span></li>
+        </ul>
+      </div>
+      <div class="calendar" id="calendar">
+        <div class="cal-fallback" id="cal-fallback">
+          <p class="eyebrow">30-minute strategy session</p>
+          <h3>Pick a time that works for you</h3>
+          <p>Tell us a couple of times that suit you and we'll confirm your session with a tailored demo of Intapp DealCloud with Celeste.</p>
+          <form id="session-form" novalidate>
+            <div class="row2">
+              <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" required></div>
+              <div class="field"><label for="s-firm">Firm</label><input id="s-firm" name="firm" type="text" autocomplete="organization" required></div>
+            </div>
+            <div class="field"><label for="s-email">Work email</label><input id="s-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="s-times">Preferred days &amp; times (with time zone)</label><textarea id="s-times" name="times" rows="3" required placeholder="e.g. Tue or Wed afternoon, CT"></textarea></div>
+            <div class="hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <button class="btn" type="submit" id="s-btn">Request a session <span>→</span></button>
+            <p class="form-err" id="s-err" role="alert"></p>
+          </form>
+          <div class="s-done" id="s-done" aria-live="polite">
+            <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3>Request received</h3>
+            <p>Thank you. We'll be in touch shortly to confirm a time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER THE FORM: 2. PRESENTED BY -->
+  <section class="presented">
+    <div class="wrap">
+      <span class="label">Presented by</span>
+      <div class="logos">
+        <img class="logo-concitor" src="/webinar/beat-the-auction/concitor.png" alt="Concitor Transformation Consulting Group" width="510" height="174">
+        <img class="logo-intapp" src="/webinar/beat-the-auction/intapp.png" alt="Intapp" width="685" height="137">
+        <img class="logo-monarch" src="/webinar/beat-the-auction/monarch.png" alt="Monarch" width="175" height="28">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="flinks">
+      <a id="privacy-foot" href="mailto:ckwon@concitor.com?subject=Privacy%20policy">Privacy policy</a>
+      <span>·</span>
+      <a href="mailto:ckwon@concitor.com">Contact</a>
+    </div>
+    <div class="fmeta">&copy; 2026 Concitor&trade; LLC</div>
+  </div>
+</footer>
+
+<script>
+/* ============ SETTINGS — fill in before launch ============ */
+const SETTINGS = {
+  videoEmbedUrl: "",   // e.g. "https://player.vimeo.com/video/123456789?autoplay=1"
+  bookingUrl:    "",   // e.g. "https://calendly.com/concitor/30min?embed_type=Inline"
+  formEndpoint:  "/webinar/beat-the-auction/submit.php",  // Hostinger PHP handler
+  privacyUrl:    "",   // e.g. "https://www.concitor.com/privacy"
+  registrationUrl: "https://us06web.zoom.us/webinar/register/WN_gtfxDYyHTJ6QnCg6IK7x3g#/registration",
+  liveUntil:     "2026-11-17T18:30:00Z"  // Tue Nov 17, 12:30 p.m. CT (session starts 11:30 a.m. CT)
+};
+/*
+  Page mode is automatic:
+    - videoEmbedUrl set            -> on-demand recording (gated)
+    - no video, before liveUntil   -> live registration (Zoom)
+    - no video, after liveUntil    -> gate form; recording "will be emailed"
+  Preview any mode with ?mode=live or ?mode=recording
+*/
+const forced = new URLSearchParams(location.search).get('mode');
+const isLive = forced ? forced === 'live'
+  : (!SETTINGS.videoEmbedUrl && Date.now() < Date.parse(SETTINGS.liveUntil));
+if (isLive) document.body.classList.add('mode-live');
+document.querySelectorAll('.reg-link').forEach(a => a.href = SETTINGS.registrationUrl);
+/* ========================================================== */
+
+const STORE_KEY = 'concitor-bta-unlocked';
+const player = document.getElementById('player');
+const card = document.getElementById('gate-card');
+const form = document.getElementById('gate-form');
+const err = document.getElementById('form-err');
+const btn = document.getElementById('submit-btn');
+
+if (SETTINGS.privacyUrl) {
+  document.getElementById('privacy-link').href = SETTINGS.privacyUrl;
+  document.getElementById('privacy-foot').href = SETTINGS.privacyUrl;
+}
+
+// Embedded booking calendar (falls back to a request-a-session card)
+if (SETTINGS.bookingUrl) {
+  const cal = document.getElementById('calendar');
+  cal.innerHTML = '';
+  const f = document.createElement('iframe');
+  f.src = SETTINGS.bookingUrl;
+  f.title = 'Book a 30-minute strategy session';
+  f.loading = 'lazy';
+  cal.appendChild(f);
+}
+
+
+function unlock(autoplay) {
+  card.classList.add('unlocked');
+  if (SETTINGS.videoEmbedUrl) {
+    player.innerHTML = '';
+    const f = document.createElement('iframe');
+    let src = SETTINGS.videoEmbedUrl;
+    if (!autoplay) src = src.replace(/([?&])autoplay=1&?/, '$1').replace(/[?&]$/, '');
+    f.src = src;
+    f.title = 'Beat the Auction — webinar recording';
+    f.allow = 'autoplay; fullscreen; picture-in-picture';
+    f.allowFullscreen = true;
+    player.appendChild(f);
+  } else {
+    player.classList.add('pending');
+  }
+}
+
+// Returning visitors who already registered skip the gate
+try { if (localStorage.getItem(STORE_KEY) === '1') unlock(false); } catch (e) {}
+
+document.getElementById('play-btn').addEventListener('click', () => {
+  document.getElementById('f-first').focus();
+  if (window.innerWidth <= 940) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  err.style.display = 'none';
+  const data = Object.fromEntries(new FormData(form).entries());
+  const missing = ['first_name','last_name','email','firm','title'].filter(k => !(data[k] || '').trim());
+  if (missing.length) { err.textContent = 'Please complete all fields.'; err.style.display = 'block'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { err.textContent = 'Please enter a valid work email.'; err.style.display = 'block'; return; }
+  data.consent = data.consent === 'yes';
+  data.type = 'recording';
+
+  btn.disabled = true; btn.textContent = 'One moment…';
+  try {
+    if (SETTINGS.formEndpoint) {
+      const r = await fetch(SETTINGS.formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!r.ok) throw new Error('submit failed');
+    }
+    try { localStorage.setItem(STORE_KEY, '1'); } catch (e) {}
+    unlock(true);
+  } catch (ex) {
+    err.textContent = 'Something went wrong. Please try again, or email ckwon@concitor.com.';
+    err.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Watch now';
+  }
+});
+
+// Strategy-session request form (used when no booking calendar is embedded)
+const sForm = document.getElementById('session-form');
+if (sForm) sForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const sErr = document.getElementById('s-err'), sBtn = document.getElementById('s-btn');
+  sErr.style.display = 'none';
+  const data = Object.fromEntries(new FormData(sForm).entries());
+  if (['name','firm','email','times'].some(k => !(data[k] || '').trim())) { sErr.textContent = 'Please complete all fields.'; sErr.style.display = 'block'; return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { sErr.textContent = 'Please enter a valid work email.'; sErr.style.display = 'block'; return; }
+  data.type = 'session';
+  sBtn.disabled = true;
+  try {
+    const r = await fetch(SETTINGS.formEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!r.ok) throw new Error('submit failed');
+    document.getElementById('cal-fallback').classList.add('sent');
+  } catch (ex) {
+    sErr.textContent = 'Something went wrong. Please try again, or email ckwon@concitor.com.';
+    sErr.style.display = 'block';
+    sBtn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
