@@ -52,7 +52,7 @@ a { color: inherit; text-decoration: none; }
 .topbar { background: var(--ink); border-bottom: 1px solid rgba(255,255,255,0.08); }
 .topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand svg { width: 32px; height: 32px; flex-shrink: 0; }
+.brand img { height: 42px; width: auto; display: block; border-radius: 6px; }
 .brand-name { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.1; }
 .brand-sub { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
 .topbar .back { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.6); transition: color .15s; white-space: nowrap; }
@@ -289,16 +289,7 @@ a.btn-submit { display: block; text-align: center; }
 <div class="topbar">
   <div class="wrap">
     <a class="brand" href="/" aria-label="Concitor home">
-      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="38" height="38" rx="9" fill="#C2611E"/>
-        <circle cx="19" cy="19" r="12" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
-        <circle cx="19" cy="19" r="6.5" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
-        <circle cx="19" cy="19" r="2.5" fill="#FBF2E7"/>
-      </svg>
-      <div>
-        <div class="brand-name">Concitor</div>
-        <div class="brand-sub">Transformation Consulting Group</div>
-      </div>
+      <img src="/images/concitor-logo.png" alt="Concitor Transformation Consulting Group" width="510" height="174">
     </a>
     <a class="back" href="https://www.concitor.com">Explore Concitor TCG →</a>
   </div>
@@ -469,7 +460,7 @@ a.btn-submit { display: block; text-align: center; }
     <div class="wrap">
       <span class="label">Presented by</span>
       <div class="logos">
-        <img class="logo-concitor" src="/webinar/beat-the-auction/concitor.png" alt="Concitor Transformation Consulting Group" width="510" height="174">
+        <img class="logo-concitor" src="/images/concitor-logo.png" alt="Concitor Transformation Consulting Group" width="510" height="174">
         <img class="logo-intapp" src="/webinar/beat-the-auction/intapp.png" alt="Intapp" width="685" height="137">
         <img class="logo-monarch" src="/webinar/beat-the-auction/monarch.png" alt="Monarch" width="175" height="28">
       </div>

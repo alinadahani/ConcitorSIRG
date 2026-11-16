@@ -71,7 +71,9 @@ header.scrolled {
   gap: 14px;
   flex-shrink: 0;
 }
-.brand-logo { width: 36px; height: 36px; flex-shrink: 0; }
+.brand-logo { height: 44px; width: auto; display: block; border-radius: 6px; flex-shrink: 0; }
+.brand-div { width: 1px; height: 30px; background: var(--line-strong); flex-shrink: 0; }
+.fbrand-logo { height: 44px; width: auto; display: block; border-radius: 6px; }
 .brand-text { display: flex; flex-direction: column; }
 .brand-name {
   font-size: 15.5px;
@@ -594,6 +596,8 @@ footer { background: var(--ink); padding: 48px 0; }
   .foot { flex-direction: column; align-items: flex-start; gap: 20px; }
 }
 @media (max-width: 480px) {
+  .brand-logo { height: 38px; }
+  .brand { gap: 10px; }
   .equity-grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -603,16 +607,9 @@ footer { background: var(--ink); padding: 48px 0; }
 <header id="site-header">
   <div class="wrap nav">
     <a class="brand" href="#top" aria-label="Concitor SIRG home">
-      <svg class="brand-logo" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="38" height="38" rx="9" fill="#C2611E"/>
-        <circle cx="19" cy="19" r="12" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
-        <circle cx="19" cy="19" r="6.5" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
-        <circle cx="19" cy="19" r="2.5" fill="#FBF2E7"/>
-      </svg>
-      <div class="brand-text">
-        <span class="brand-name">Concitor</span>
-        <span class="brand-sub">Social Impact &amp; Returns Group</span>
-      </div>
+      <img class="brand-logo" src="/images/concitor-logo.png" alt="Concitor Transformation Consulting Group" width="510" height="174">
+      <span class="brand-div" aria-hidden="true"></span>
+      <span class="brand-sub">Social Impact &amp;<br>Returns Group</span>
     </a>
     <nav class="menu">
       <a href="#vision">Vision</a>
@@ -953,16 +950,8 @@ footer { background: var(--ink); padding: 48px 0; }
 <footer>
   <div class="wrap foot">
     <div class="fbrand">
-      <svg width="32" height="32" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="38" height="38" rx="9" fill="#C2611E"/>
-        <circle cx="19" cy="19" r="12" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
-        <circle cx="19" cy="19" r="6.5" stroke="#FBF2E7" stroke-width="2.5" fill="none"/>
-        <circle cx="19" cy="19" r="2.5" fill="#FBF2E7"/>
-      </svg>
-      <div class="fbrand-text">
-        <span class="fbrand-name">Concitor</span>
-        <span class="fbrand-sub">Social Impact &amp; Returns Group</span>
-      </div>
+      <img class="fbrand-logo" src="/images/concitor-logo.png" alt="Concitor Transformation Consulting Group" width="510" height="174" loading="lazy">
+      <span class="fbrand-sub">Social Impact &amp;<br>Returns Group</span>
     </div>
     <div class="flinks">
       <a href="https://www.concitor.com">concitor.com</a>
