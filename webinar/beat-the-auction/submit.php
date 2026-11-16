@@ -1,6 +1,6 @@
 <?php
 /*
- * Form handler for /webinar-beat-the-auction (runs on Hostinger PHP hosting).
+ * Form handler for /webinar/beat-the-auction/ (runs on Hostinger PHP hosting).
  * Handles two forms:
  *   type=recording  – gate form to watch the recording
  *   type=session    – request for a 30-minute strategy session
@@ -86,7 +86,7 @@ foreach ($fields as $key => $label) { $lines[] = str_pad($label . ':', 18) . $da
 if ($type === 'recording') { $lines[] = str_pad('Consent:', 18) . $consent; }
 $lines[] = str_pad('Submitted:', 18) . $when;
 $lines[] = '';
-$lines[] = 'Source: concitor.org/webinar-beat-the-auction';
+$lines[] = 'Source: concitor.org/webinar/beat-the-auction/';
 
 $headers = [
     'From: Concitor Webinar <' . NOTIFY_FROM . '>',
