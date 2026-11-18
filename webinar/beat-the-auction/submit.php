@@ -12,6 +12,9 @@
 const NOTIFY_TO   = 'ckwon@concitor.com';        // who receives each submission
 const NOTIFY_FROM = 'no-reply@concitor.org';    // must be an address on a domain hosted at Hostinger
 const DATA_DIR    = __DIR__ . '/data';
+// Recording link: only sent to the browser after a valid recording sign-up,
+// so it never appears in the page source.
+const RECORDING_URL = 'https://us06web.zoom.us/rec/share/YpBkITNnfGwLKpTQWphkz6M1eBJvzOCOfHgtsjnaVTOrztOEV5qreFm4hrL_tPLP.ciqhg5eJMBngyi5J?startTime=1794936617000';
 // ====================
 
 header('Content-Type: application/json; charset=utf-8');
@@ -98,4 +101,6 @@ $mailed = @mail(NOTIFY_TO, '=?UTF-8?B?' . base64_encode($subject) . '?=', implod
 if (!$saved && !$mailed) {
     respond(500, ['ok' => false, 'error' => 'Could not record submission']);
 }
-respond(200, ['ok' => true]);
+$out = ['ok' => true];
+if ($type === 'recording' && RECORDING_URL !== '') { $out['recording_url'] = RECORDING_URL; }
+respond(200, $out);
