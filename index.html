@@ -573,6 +573,11 @@ footer { background: var(--ink); padding: 48px 0; }
   border-bottom: none;
 }
 .mobile-menu.open { display: flex; }
+.mobile-menu .mobile-divider img { height: 36px; width: auto; display: block; border-radius: 5px; }
+.hero-lockup { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; }
+.hero-lockup img { height: 56px; width: auto; display: block; border-radius: 7px; }
+.hero-lockup .brand-div { height: 38px; }
+.hero-lockup .eyebrow { margin: 0; }
 
 /* RESPONSIVE */
 @media (max-width: 1000px) {
@@ -631,7 +636,7 @@ footer { background: var(--ink); padding: 48px 0; }
   <a href="#services" onclick="closeMobileMenu()">Services</a>
   <a href="#equity" onclick="closeMobileMenu()">Equity Max</a>
   <a href="#contact" onclick="closeMobileMenu()">Contact</a>
-  <span class="mobile-divider">Concitor</span>
+  <span class="mobile-divider"><img src="/images/concitor-logo.png" alt="Concitor" width="510" height="174"></span>
   <a href="https://www.concitor.com">Explore Concitor TCG →</a>
 </div>
 
@@ -641,7 +646,11 @@ footer { background: var(--ink); padding: 48px 0; }
   <section class="hero">
     <div class="wrap hero-grid">
       <div data-rise>
-        <p class="eyebrow">Concitor · Social Impact &amp; Returns Group</p>
+        <div class="hero-lockup">
+          <img src="/images/concitor-logo.png" alt="Concitor Transformation Consulting Group" width="510" height="174">
+          <span class="brand-div" aria-hidden="true"></span>
+          <span class="eyebrow">Social Impact &amp; Returns Group</span>
+        </div>
         <h1>The same rigor that transforms companies — now in service of <em>social return.</em></h1>
         <p class="lead">SIRG helps mission-aligned nonprofit and philanthropic partners design transformative strategies that maximize <strong>Social Return on Investment (SROI)</strong> — durable, measurable, and built to compound over time.</p>
         <div class="cta-row">
